@@ -23,11 +23,12 @@ headers = {
 dirs = os.listdir(oldDirectory)
 
 for file in dirs:
-   fileName = file[:-4] # Remove the '.pdf' extension
-   requestURL = 'http://localhost:8983/solr/'+sorlCore+'/update/extract?literal.file_name='+fileName
-   data = open(oldDirectory + file, 'rb').read()
-   requests.post(requestURL, headers=headers, data=data)
-   shutil.move(oldDirectory + file, newDirectory + file) 
-   print (file)
+   if file[-4:] == '.pdf':
+      fileName = file[:-4] # Remove the '.pdf' extension
+      requestURL = 'http://localhost:8983/solr/'+sorlCore+'/update/extract?literal.file_name='+fileName
+      data = open(oldDirectory + file, 'rb').read()
+      requests.post(requestURL, headers=headers, data=data)
+      shutil.move(oldDirectory + file, newDirectory + file) 
+      print (file)
 
-print ('[Info] PDF sile successfuly uploaded. Happy searcing!')
+print ('[Info] PDF files successfuly uploaded. Happy searcing!')
